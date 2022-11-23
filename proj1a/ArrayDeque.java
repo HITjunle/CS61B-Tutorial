@@ -2,10 +2,10 @@
  * Created by le
  */
 public class ArrayDeque<T>{
-    T[] items;
-    int size;
-    int first;
-    int last;
+    private T[] items;
+    private int size;
+    private int first;
+    private int last;
     public ArrayDeque(){
         items = (T[]) new Object[8];
         size = 0;
@@ -51,12 +51,17 @@ public class ArrayDeque<T>{
     public T removeLast(){
         T t = items[last];
         items[last] = null;
-        last = (last-1)%8;
+        if(last <= 0){
+            last = last+7;
+        }
+        else {
+        last = (last-1)%8;}
         size -=1;
         return t;
     }
     public T get(int index){
         return items[(first+index+1)%8];
     }
+
 
 }

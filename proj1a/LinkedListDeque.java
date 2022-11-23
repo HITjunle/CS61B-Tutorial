@@ -2,7 +2,7 @@
  * Created by le
  */
 public class LinkedListDeque <T>{
-    public class Node{
+    private class Node{
         T item;
         Node next;
         Node prev;
@@ -12,8 +12,8 @@ public class LinkedListDeque <T>{
             prev = p;
         }
     }
-    int size;
-    Node sentinel1 ,sentinel2 ;
+    private int size;
+    private Node sentinel1 ,sentinel2 ;
     public LinkedListDeque(){
         sentinel1 = new Node(null,null,null);
         sentinel2 = new Node(null,null,null);
@@ -59,7 +59,7 @@ public class LinkedListDeque <T>{
             return null;
         }
         Node p = sentinel2.prev;
-        p.prev = sentinel2.prev;
+        sentinel2.prev = p.prev;
         p.prev.next = sentinel2;
         size -= 1;
         return p.item;
@@ -82,11 +82,18 @@ public class LinkedListDeque <T>{
         }
         return getRecursive(0,index,sentinel1.next);
     }
-    public T getRecursive(int start,int index,Node x){
+    private T getRecursive(int start,int index,Node x){
         if(start == index)
             return x.item;
         return getRecursive(start+1,index,x.next);
     }
 
+    public static void main(String[] args) {
+        LinkedListDeque<Integer> L = new LinkedListDeque<>();
+        L.addFirst(2);
+        L.addFirst(3);
+        L.removeFirst();
+        L.printDeque();
+    }
 
 }
