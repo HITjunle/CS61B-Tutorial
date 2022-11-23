@@ -9,22 +9,33 @@ public class ArrayDeque<T>{
     public ArrayDeque(){
         items = (T[]) new Object[8];
         size = 0;
-        first = 0;
+        first = items.length-1;
         last = 0;
     }
+    private void resize(int capacity){
+        T[] a = (T[]) new Object[capacity];
+        System.arraycopy(items,0,a,0,items.length);
+        first = a.length-1;
+        last = items.length;
+        items = a;
+    }
     public void addFirst(T item){
+        if(items.length ==size)
+            resize(items.length*2);
         items[first] = item;
         if(first <=0){
-            first = (first+7)%8;
+            first = (first+ items.length-1)%(items.length);
         }
         else {
-            first =(first-1)%8;
+            first =(first-1)%(items.length);
         }
         size+=1;
     }
     public void addLast(T item){
-        last = (last+1)%8;
+        if(items.length ==size)
+            resize(items.length*2);
         items[last] = item;
+        last = (last+1)%(items.length);
         size+=1;
     }
     public boolean isEmpty(){
@@ -35,33 +46,38 @@ public class ArrayDeque<T>{
     }
     public void printDeque(){
         int i = first;
-        while (i!=last){
+        while (i!=last-1){
             i++;
-            i=i%8;
-            System.out.println(items[i]);
+            i=i%(items.length);
+            System.out.print(items[i]+" ");
         }
     }
     public T removeFirst(){
-        T t = items[first+1];
-        items[first+1] = null;
-        first =(first+1)%8;
+        first = (first+1)% items.length;
+        if(items[first]==null)
+            return null;
+        T t = items[first];
+        items[first] = null;
         size -=1;
         return t;
     }
     public T removeLast(){
-        T t = items[last];
-        items[last] = null;
         if(last <= 0){
-            last = last+7;
+            last = last+items.length;
         }
         else {
-        last = (last-1)%8;}
+            last = (last-1)%(items.length);}
+        if(items[last]==null)
+            return null;
+        T t = items[last];
+        items[last] = null;
         size -=1;
         return t;
     }
     public T get(int index){
-        return items[(first+index+1)%8];
+        if(index>=size)
+            return null;
+        return items[(first+index+1)%(items.length)];
     }
-
 
 }
