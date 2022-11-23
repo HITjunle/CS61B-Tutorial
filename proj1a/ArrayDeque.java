@@ -63,7 +63,7 @@ public class ArrayDeque<T>{
     }
     public T removeLast(){
         if(last <= 0){
-            last = last+items.length;
+            last = last+items.length-1;
         }
         else {
             last = (last-1)%(items.length);}
