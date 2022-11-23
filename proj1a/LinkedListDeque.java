@@ -39,13 +39,14 @@ public class LinkedListDeque <T>{
     }
     public void printDeque(){
         Node p = sentinel1.next;
-        while(p!=null&&p.item!=null){
-            System.out.println(p.item);
+        while(p.next!=null&&p.next.item!=null){
+            System.out.print(p.item+" ");
             p = p.next;
         }
+        System.out.println(p.item);
     }
     public T removeFirst(){
-        if(sentinel1.next == null){
+        if(sentinel1.next == sentinel2){
             return null;
         }
         Node p = sentinel1.next;
@@ -55,7 +56,7 @@ public class LinkedListDeque <T>{
         return p.item;
     }
     public T removeLast(){
-        if(sentinel2.prev == null){
+        if(sentinel2.prev == sentinel1){
             return null;
         }
         Node p = sentinel2.prev;
@@ -88,12 +89,5 @@ public class LinkedListDeque <T>{
         return getRecursive(start+1,index,x.next);
     }
 
-    public static void main(String[] args) {
-        LinkedListDeque<Integer> L = new LinkedListDeque<>();
-        L.addFirst(2);
-        L.addFirst(3);
-        L.removeFirst();
-        L.printDeque();
-    }
 
 }
