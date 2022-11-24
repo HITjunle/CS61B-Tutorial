@@ -84,4 +84,7 @@ public class Plip extends Creature {
         return new Action(Action.ActionType.STAY);
     }
 
+    public static void main(String[] args) {
+
+    }
 }

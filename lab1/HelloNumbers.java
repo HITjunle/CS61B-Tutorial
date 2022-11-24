@@ -7,7 +7,8 @@ public class HelloNumbers{
             sum+=x;
             x = x + 1;
         }
-        System.out.println(sum);    
+        System.out.println(sum);
+        System.out.println("你好");
     }
 
 }
