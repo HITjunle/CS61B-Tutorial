@@ -1,8 +1,5 @@
-/**
- * Created by le
- */
-import java.util.LinkedList;
-public class Palindrome extends LinkedList<Character> {
+
+public class Palindrome extends LinkedListDeque<Character>{
     public Deque<Character> wordToDeque(String word) {
         Deque<Character> D =new LinkedListDeque<>();
         for(int i= 0;i<word.length();i++){
