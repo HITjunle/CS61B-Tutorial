@@ -1,5 +1,5 @@
 
-public class Palindrome extends LinkedListDeque<Character>{
+public class Palindrome{
     public Deque<Character> wordToDeque(String word) {
         Deque<Character> D =new LinkedListDeque<>();
         for(int i= 0;i<word.length();i++){
