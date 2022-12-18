@@ -108,7 +108,7 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
         validateSinkSwimArg(index);
 
         /** TODO: Your code here. */
-        while ((parentIndex(index)>=1&&contents[index].myPriority < contents[parentIndex(index)].myPriority)){
+        while (inBounds(parentIndex(index))&&contents[index].myPriority < contents[parentIndex(index)].myPriority){
             swap(index,parentIndex(index));
             index = parentIndex(index);
         }
@@ -120,9 +120,7 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
     private void sink(int index) {
         // Throws an exception if index is invalid. DON'T CHANGE THIS LINE.
         validateSinkSwimArg(index);
-        if (leftIndex(index)>size)
-            return;
-        if (rightIndex(index)>size)
+        if (!inBounds(rightIndex(index))||!inBounds(leftIndex(index))||!inBounds(index))
             return;
         if (contents[index].myPriority<=contents[leftIndex(index)].myPriority&&contents[index].myPriority<=contents[rightIndex(index)].myPriority)
             return;
@@ -160,6 +158,8 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
     @Override
     public T peek() {
         /* TODO: Your code here! */
+        if (size == 0)
+            return null;
         return contents[1].myItem;
     }
 
@@ -202,9 +202,16 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
     @Override
     public void changePriority(T item, double priority) {
         /* TODO: Your code here! */
-        for (int i = 0;i<size;i++){
+        for (int i = 1;i<=size;i++){
             if (contents[i].myItem.equals(item)){
-                contents[i].myPriority = priority;
+                if (contents[i].myPriority >= priority){
+                    contents[i].myPriority = priority;
+                    swim(i);
+                }
+                else {
+                    contents[i].myPriority = priority;
+                    sink(i);
+                }
             }
         }
     }
