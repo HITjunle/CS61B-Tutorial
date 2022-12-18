@@ -130,7 +130,7 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
             swap(index,leftIndex(index));
             sink(leftIndex(index));
         }
-        if (contents[index].myPriority>contents[rightIndex(index)].myPriority&&contents[leftIndex(index)].myPriority>=zcontents[rightIndex(index)].myPriority) {
+        if (contents[index].myPriority>contents[rightIndex(index)].myPriority&&contents[leftIndex(index)].myPriority>=contents[rightIndex(index)].myPriority) {
             swap(index,rightIndex(index));
             sink(rightIndex(index));
         }
