@@ -86,6 +86,8 @@ public class Board implements WorldState{
         return manhattan();
     }
     public boolean equals(Object y){
+        if (y == null)
+            return false;
         if (y.getClass() != this.getClass())
             return false;
         if (((Board) y).size != size && ((Board) y).tile[0].length != size)
@@ -113,5 +115,8 @@ public class Board implements WorldState{
         s.append("\n");
         return s.toString();
     }
-
+    @Override
+    public int hashCode(){
+        return super.hashCode();
+    }
 }
