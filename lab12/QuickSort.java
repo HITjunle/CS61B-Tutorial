@@ -51,7 +51,6 @@ public class QuickSort {
         for (Item item : unsorted){
             int cmp = item.compareTo(pivot);
             if (cmp < 0){
-                unsorted.dequeue();
                 less.enqueue(item);
             }
             if (cmp == 0){
@@ -81,6 +80,5 @@ public class QuickSort {
         return catenate(quickSort(less),catenate(equal,quickSort(greater)));
 
     }
-
 
 }
