@@ -78,7 +78,7 @@ public class CountingSort {
             max = (max > a) ? max : a;
             min = (min < a) ? min : a;
         }
-        int[] nCount = new int[Math.abs(min)+1];
+        int[] nCount = new int[Math.abs(min)];
         int[] pCount = new int[Math.abs(max)+1];
         for (int i : arr){
             if (i < 0)
@@ -86,7 +86,7 @@ public class CountingSort {
             else
                 pCount[i]++;
         }
-        int[] nStart = new int[Math.abs(min)+1];
+        int[] nStart = new int[Math.abs(min)];
         int[] pStart = new int[Math.abs(max)+1];
         int nPos = 0;
         int pPos = 0;
@@ -114,6 +114,7 @@ public class CountingSort {
         }
         return sorted;
     }
+
 
 
 }
