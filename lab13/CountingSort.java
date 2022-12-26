@@ -73,47 +73,29 @@ public class CountingSort {
         int max = Integer.MIN_VALUE;
         int min = Integer.MAX_VALUE;
         for (int a : arr){
-            if (a < 0)
-                negativeCount += 1;
             max = (max > a) ? max : a;
             min = (min < a) ? min : a;
         }
-        int[] nCount = new int[Math.abs(min)];
-        int[] pCount = new int[Math.abs(max)+1];
+        int[] count = new int[max-min+ 1];
         for (int i : arr){
-            if (i < 0)
-                nCount[i + Math.abs(min)]++;
-            else
-                pCount[i]++;
+                count[i-min] += 1;
         }
-        int[] nStart = new int[Math.abs(min)];
-        int[] pStart = new int[Math.abs(max)+1];
-        int nPos = 0;
-        int pPos = 0;
-        for (int i = 0 ; i < nStart.length;i++){
-            nStart[i] = nPos;
-            nPos += nCount[i];
-        }
-        for (int i = 0 ;i < pStart.length; i++){
-            pStart[i] = pPos;
-            pPos += pCount[i];
+        int[] start = new int[max-min+1];
+        int pos = 0;
+        for (int i = 0 ;i < start.length; i++){
+            start[i] = pos;
+            pos += count[i];
         }
         int[] sorted = new int[arr.length];
         for (int i = 0 ;i<arr.length;i++){
             int item = arr[i];
-            if (item < 0){
-                int place = nStart[item + Math.abs(min)];
-                sorted[place] = item;
-                nStart[item + Math.abs(min)] += 1;
-            }
-            else {
-                int place = pStart[item] + negativeCount;
-                sorted[place] = item;
-                pStart[item] += 1;
-            }
+            int place = start[item - min];
+            sorted[place] = item;
+            start[item-min] += 1;
         }
         return sorted;
     }
+
 
 
 

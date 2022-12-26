@@ -37,14 +37,14 @@ public class RadixSort {
      */
     private static void sortHelperLSD(String[] asciis, int index) {
         // Optional LSD helper method for required LSD radix sort
-        int[] count = new int[129];
+        int[] count = new int[257];
         String[] sorted = new String[asciis.length];
         for (String ascii : asciis) {
             int i = charATAscii(ascii, index);
             count[i] += 1;
         }
         int pos = 0;
-        int[] start = new int[129];
+        int[] start = new int[257];
 
         for (int i = 0; i < start.length; i++) {
             start[i] = pos;
