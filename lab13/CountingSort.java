@@ -1,3 +1,5 @@
+import java.util.Random;
+
 /**
  * Class with 2 ways of doing Counting sort, one naive way and one "better" way
  *
@@ -67,6 +69,51 @@ public class CountingSort {
      */
     public static int[] betterCountingSort(int[] arr) {
         // TODO make counting sort work with arrays containing negative numbers.
-        return null;
+        int negativeCount = 0;
+        int max = Integer.MIN_VALUE;
+        int min = Integer.MAX_VALUE;
+        for (int a : arr){
+            if (a < 0)
+                negativeCount += 1;
+            max = (max > a) ? max : a;
+            min = (min < a) ? min : a;
+        }
+        int[] nCount = new int[Math.abs(min)+1];
+        int[] pCount = new int[Math.abs(max)+1];
+        for (int i : arr){
+            if (i < 0)
+                nCount[i + Math.abs(min)]++;
+            else
+                pCount[i]++;
+        }
+        int[] nStart = new int[Math.abs(min)+1];
+        int[] pStart = new int[Math.abs(max)+1];
+        int nPos = 0;
+        int pPos = 0;
+        for (int i = 0 ; i < nStart.length;i++){
+            nStart[i] = nPos;
+            nPos += nCount[i];
+        }
+        for (int i = 0 ;i < pStart.length; i++){
+            pStart[i] = pPos;
+            pPos += pCount[i];
+        }
+        int[] sorted = new int[arr.length];
+        for (int i = 0 ;i<arr.length;i++){
+            int item = arr[i];
+            if (item < 0){
+                int place = nStart[item + Math.abs(min)];
+                sorted[place] = item;
+                nStart[item + Math.abs(min)] += 1;
+            }
+            else {
+                int place = pStart[item] + negativeCount;
+                sorted[place] = item;
+                pStart[item] += 1;
+            }
+        }
+        return sorted;
     }
+
+
 }
