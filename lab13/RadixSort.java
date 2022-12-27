@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 /**
  * Class for doing Radix sort
  *
@@ -14,6 +16,7 @@ public class RadixSort {
      * @param asciis String[] that needs to be sorted
      * @return String[] the sorted array
      */
+    static int[][] start1;
     public static String[] sort(String[] asciis) {
         // TODO: Implement LSD Sort
         String[] sorted = new String[asciis.length];
@@ -77,10 +80,52 @@ public class RadixSort {
      * @param end    int for where to end sorting in this method (does not include String at end)
      * @param index  the index of the character the method is currently sorting on
      **/
-    private static void sortHelperMSD(String[] asciis, int start, int end, int index) {
+    private static void sortHelperMSD(String[] asciis, int start, int end, int index,int[][]start1) {
         // Optional MSD helper method for optional MSD radix sort
-        return;
+        int maxLength = 0;
+        for (int i = 0; i < asciis.length; i++) {
+            maxLength = maxLength > asciis[i].length() ? maxLength : asciis[i].length();
+        }
+        int[][] count = new int[257][maxLength];
+        String[] sorted = new String[asciis.length];
+        for (int i = start; i <= end;i++){
+            count[charATAscii(asciis[i],index)][index] += 1;
+        }
+        int pos = start;
+        for (int i = 0; i < start1.length; i++) {
+            start1[i][index] = pos;
+            pos += count[i][index];
+        }
+        for (int i = start; i <= end; i++) {
+            String s = asciis[i];
+            int place = start1[charATAscii(s, index)][index];
+            sorted[place] = s;
+            start1[charATAscii(s, index)][index] += 1;
+        }
+        for (int i = start;i<end+1;i++)
+            asciis[i] = sorted[i];
 
+    }
+    private static String[] MSD(String[] asciis) {
+        String[] s =  Arrays.copyOf(asciis,asciis.length);
+        int maxLength = 0;
+        for (int i = 0; i < asciis.length; i++) {
+            maxLength = maxLength > asciis[i].length() ? maxLength : asciis[i].length();
+        }
+        int index = 0;
+        int[][] start1 = new int[257][maxLength];
+        sortHelperMSD(asciis,0,asciis.length-1,0,start1);
+        for (int j = 0;j < start1.length-1;j++)
+            for (int i = 1; i < maxLength; i++) {
+                if (start1[j][i - 1] == start1[j + 1][i - 1])
+                    break;
+                sortHelperMSD(asciis, start1[j][i - 1], start1[j + 1][i - 1]-1, i, start1);
+            }
+        return s;
+    }
 
+    public static void main(String[] args) {
+        String[] ss = {"a11","gh1","b23","b4","c2","A333"};
+        String[] s = MSD(ss);
     }
 }
